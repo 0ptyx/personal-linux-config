@@ -16,7 +16,7 @@ get_packages() {
     # each package as a command which is not what 
     # we want. Might want to look for a better way 
     # to pass things back without using globals
-    eval "$1='$(echo $all_pkgs)'"
+    eval "$1='$all_pkgs'"
 }
 
 # install packages provided by $1 with apt
@@ -27,7 +27,7 @@ do_apt() {
     eval $cmd
 }
 
-post_arch {
+post_arch() {
     git clone https//aur.archlinux.org/yay.git
     cd yay && makepkg -si --noconfirm --needed
     yay -S && yay -Sy --noconfirm --needed stow
@@ -37,7 +37,7 @@ post_arch {
 do_pacman() {
     sudo pacman -Syyuu --noconfirm
     cmd="sudo pacman --needed --noconfirm -Sy"
-    cmd+=$1
+    cmd+="$1"
     eval $cmd
 }
 
@@ -51,7 +51,7 @@ then
     then
         get_packages deb_pkgs "$(pwd)/tasks/packages/deb.pkgs"
     fi
-    $pkgs+=$deb_pkgs
+    pkgs+="$deb_pkgs"
     do_apt "$pkgs"
 elif command -v pacman > /dev/null
 then
@@ -61,7 +61,7 @@ then
     then
         get_packages arch_pkgs "$(pwd)/tasks/packages/arch.pkgs"
     fi
-    $pkgs+=$arch_pkgs
+    pkgs+=$arch_pkgs
     do_pacman "$pkgs" && post_arch
 fi
 
