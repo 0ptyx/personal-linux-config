@@ -1,22 +1,11 @@
 vim
-<<<<<<< HEAD
 fzf
-tmux
-screen
-zsh
-stow
-=======
-fxf
 tmux 
 screen
 zsh
->>>>>>> upstream/main
 cmake
 gdb
 git
 curl
-<<<<<<< HEAD
-=======
 meson
 
->>>>>>> upstream/main
