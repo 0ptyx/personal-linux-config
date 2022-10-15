@@ -11,7 +11,12 @@ get_packages() {
     do
         all_pkgs+=" $pkg"
     done < "$2"
-    eval "$1='$all_pkgs'"
+    # TODO/NOTE: This is sort of a hack?
+    # Without this, eval will attempt to execute
+    # each package as a command which is not what 
+    # we want. Might want to look for a better way 
+    # to pass things back without using globals
+    eval "$1='$(echo $all_pkgs)'"
 }
 
 # install packages provided by $1 with apt
